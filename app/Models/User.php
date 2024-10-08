@@ -23,6 +23,11 @@ class User extends Authenticatable
         'nid',
     ];
 
+    // user has single registration in the registration table
+    public function registration()
+    {
+        return $this->hasOne(Registration::class);
+    }
 
 
     /**
