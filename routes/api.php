@@ -5,3 +5,5 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [RegistrationController::class, 'userRegister']);
+Route::get('/search', [RegistrationController::class, 'vaccinationRegistrationSearch']);
+
