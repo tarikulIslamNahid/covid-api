@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Registration extends Model
 {
     use HasFactory;
+
+    public function vaccineCenter()
+    {
+        return $this->belongsTo(VaccineCenter::class);
+    }
 }
