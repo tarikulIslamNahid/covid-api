@@ -18,12 +18,4 @@ class VaccineCenter extends Model
     {
         return $this->hasMany(Registration::class);
     }
-
-    public function getAvailableSlotsForDate($date)
-    {
-        return $this->max_capacity - $this->registrations()->where('scheduled_date', $date)->count();
-    }
-
-
-
 }
