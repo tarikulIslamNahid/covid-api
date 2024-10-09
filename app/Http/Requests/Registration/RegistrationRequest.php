@@ -24,7 +24,7 @@ class RegistrationRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'nid' => 'required|string|max:10|unique:users,nid',
+            'nid' => 'required|string|min:10|max:10|unique:users,nid',
             'vaccine_center_id' => 'required|exists:vaccine_centers,id',
         ];
     }

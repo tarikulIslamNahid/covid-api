@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Vaccination Schedule Notification</h1>
-    <p>Dear {{ $name }},</p>
+    <p>Dear {{ $user->name }},</p>
     <p>You are scheduled for vaccination on {{ $scheduledDate }}. Please prepare for the vaccination.</p>
     <p>Thank you.</p>
 </body>

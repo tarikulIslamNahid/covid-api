@@ -54,7 +54,7 @@ class RegistrationService
                     ->whereScheduledDate($today->toDateString())
                     ->count();
 
-                if ($registeredCount < $vaccinationCenter->daily_limit) {
+                if ($registeredCount < $vaccinationCenter->max_capacity) {
                     return $today->toDateString();
                 }
             }

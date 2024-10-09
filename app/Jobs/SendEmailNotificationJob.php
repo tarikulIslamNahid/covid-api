@@ -9,18 +9,16 @@ use Illuminate\Support\Facades\Mail;
 
 class SendEmailNotificationJob implements ShouldQueue
 {
-    use Queueable;
-    private $name;
-    private $email;
-    private $scheduledDate;
+    use  Queueable;
+    public $user;
+    public $scheduledDate;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($name,$email,$scheduledDate)
+    public function __construct($user,$scheduledDate)
     {
-        $this->name = $name;
-        $this->email = $email;
+        $this->user = $user;
         $this->scheduledDate = $scheduledDate;
     }
 
@@ -29,6 +27,6 @@ class SendEmailNotificationJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->email)->send(new SendEmailNotificationMail($this->name, $this->scheduledDate));
+        Mail::to($this->user->email)->send(new SendEmailNotificationMail($this->user, $this->scheduledDate));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,15 +14,15 @@ class SendEmailNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $name;
-    private $scheduledDate;
+    public $user;
+    public $scheduledDate;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($name,$scheduledDate)
+    public function __construct($user,$scheduledDate)
     {
-        $this->name = $name;
+        $this->user = $user;
         $this->scheduledDate = $scheduledDate;
     }
 
@@ -31,7 +32,7 @@ class SendEmailNotificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Send Vaccination Schedule Notification',
+            subject: 'Vaccination Schedule Notification',
         );
     }
 
