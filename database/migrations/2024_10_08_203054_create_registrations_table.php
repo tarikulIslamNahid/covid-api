@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('vaccine_center_id');
+            $table->unsignedBigInteger('vaccine_center_id')->index();
             $table->foreign('vaccine_center_id')->references('id')->on('vaccine_centers');
-            $table->date('scheduled_date');
+            $table->date('scheduled_date')->index();
             $table->integer('vaccination_status')->default(0); // 0: registered, 1:scheduled, 2: vaccinated
             $table->timestamps();
         });
