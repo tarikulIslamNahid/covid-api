@@ -8,6 +8,7 @@ use App\Http\Service\RegistrationService;
 use App\Http\Trait\MessageTrait;
 use App\Jobs\SendEmailNotificationJob;
 use App\Models\User;
+use Carbon\Carbon;
 
 class RegistrationController extends Controller
 {
@@ -24,7 +25,7 @@ class RegistrationController extends Controller
             $scheduledDate = $user->registration->scheduled_date;
             // Send email notification
             SendEmailNotificationJob::dispatch($user,$scheduledDate);
-            return response()->json(['message' => 'User registered successfully']);
+            return response()->json(['message' => 'User registered successfully','success'=> true]);
 
         } catch (\Throwable $th) {
             throw $th;
@@ -34,13 +35,23 @@ class RegistrationController extends Controller
     public function vaccinationRegistrationSearch(SearchRequest $request){
         try {
             $user = User::whereNid($request->nid)->with('registration')->first();
+            $today = Carbon::today();
+            $scheduled_date = Carbon::parse($user->registration->scheduled_date);
+
+            if ($scheduled_date->isBefore($today)) {
+                $user->registration->vaccination_status = $this->vaccinatedStatus;
+                $user->registration->save();
+            }
             switch ($user->registration->vaccination_status) {
                 case $this->notRegisteredStatus:
-                    return 'Not Registered';
+            return response()->json(['message' => 'Not Registered','success'=> true]);
+
                 case $this->scheduledStatus:
-                    return 'Scheduled';
+            return response()->json(['message' => 'Scheduled','success'=> true]);
+
                 case $this->vaccinatedStatus:
-                    return 'Vaccinated';
+            return response()->json(['message' => 'Vaccinated','success'=> true]);
+
             }
             return $user;
         } catch (\Throwable $th) {
